@@ -54,10 +54,10 @@ public class Degree {
         return temp;
     }
 
-    public static HashMap<Integer,Double> calculateMostCentralNodes(double avgDegreeOfNodes) {
+    public static HashMap<Integer,Double> calculateMostCentralNodes(long sumDegrees) {
         HashMap<Integer, Double> results = new HashMap<Integer, Double>();
         degrees.forEach((key, value) -> {
-            results.put(key, value / avgDegreeOfNodes);
+            results.put(key, value / (sumDegrees * 1.0));
         });
         return results;
     }
@@ -68,7 +68,7 @@ public class Degree {
         for(Map.Entry<Integer, Double> entry : nodes.entrySet()) {
             int key = entry.getKey();
             double value = entry.getValue();
-            System.out.println("Node " + key + " => Avg degree: " + value);
+            System.out.println("Node " + key + " => Score: " + value);
             index++;
             if (index >= NUMBER_OF_MOST_CENTRAL_NODES) {
                 break;
@@ -86,8 +86,8 @@ public class Degree {
             sumDegrees += d;
         }
         double avgDegreeOfNodes = sumDegrees / (degrees.size() * 1.0);
-        System.out.println("Average degree of nodes: " + avgDegreeOfNodes);
-        HashMap<Integer, Double> nodes = calculateMostCentralNodes(avgDegreeOfNodes);
+        System.out.println("Degree average of nodes: " + avgDegreeOfNodes);
+        HashMap<Integer, Double> nodes = calculateMostCentralNodes(sumDegrees);
         nodes = sortByValue(nodes);
         printResult(nodes);
         long step3 = System.currentTimeMillis();
